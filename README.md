@@ -1,0 +1,2 @@
+# Notes_Game
+My friend showed me how he implemented a similar idea in TypeScript and I wanted to see how fast I would manage to implement a similar app. I managed to implement something similar in 3 hours and 56 minutes and 11 seconds. I might have expected to do it in 2 hours, but I guess that was a bit far fetched. Naturally, there are bugs in this implementation. The interface is also, quite frankly speaking, horrendous. The code is not aesthetic to look at either. I might go over this project later and tidy it up, or I might implement it again to see how I evolved. 
