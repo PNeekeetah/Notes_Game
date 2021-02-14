@@ -58,24 +58,27 @@ def play_sound(sound_frequency : float ):
     sd.play(sound, sd.sampling_frequency )    
     
 def play_sounds(together : bool , sounds : list):
-    if (together):
-        play_2_sounds_together(sounds)
-    else:
-        play_sequentially(sounds)
+#   if (together):
+#        play_2_sounds_together(sounds)
+#    else:
+    play_sequentially(sounds)
         
     
 def play_2_sounds_together(sounds : list):
     threads = list()
-    for index in range(len(sounds)):
-        x = threading.Thread(target = play_sound, args=(sounds[index],))
-        threads.append(x)        
-        x.start()    
-        x.join()
+    if (len (sounds) > 0):
+        for index in range(len(sounds)):
+            x = threading.Thread(target = play_sound, args=(sounds[index],))
+            threads.append(x)        
+            x.start()
+            x.join()
+            
         
 def play_sequentially (sounds : list):
-    play_sound(sounds[0])
-    time.sleep(2)
-    play_sound(sounds[1])
+    if (len(sounds) > 0):
+        play_sound(sounds[0])
+        time.sleep(2)
+        play_sound(sounds[1])
     
     
         
@@ -257,8 +260,6 @@ def start_game():
     string_vars.append(correct)
     string_vars.append(wrong)
     
-    generate_sound(int_play_together.get())
-    
     checkbox_unison ['state'] = "disabled"
     checkbox_minor_second ['state'] = "disabled"
     checkbox_major_second ['state'] = "disabled"
@@ -272,6 +273,10 @@ def start_game():
     checkbox_minor_seventh['state'] = "disabled"
     checkbox_major_seventh['state'] = "disabled"
     checkbox_octave['state'] = "disabled"
+    button_generate_note_pair["state"] = "active"
+
+    generate_sound(int_play_together.get())
+
 
     root.update()
     
@@ -302,6 +307,10 @@ def stop_game():
     checkbox_minor_seventh['state'] = "active"
     checkbox_major_seventh['state'] = "active"
     checkbox_octave['state'] = "active"
+    button_generate_note_pair["state"] = "disabled"
+    
+    string_vars.pop(0)
+    string_vars.pop(0)    
 
     root.update()
     
@@ -321,7 +330,8 @@ def check_choice():
         print("You're Wrong")
         wrong_choices += 1
         string_vars[1].set(wrong_choices)
-        
+
+    root.update()        
     generate_sound(int_play_together.get())
     
 root = tk.Tk()
@@ -333,6 +343,7 @@ frame.pack()
 
 button_generate_note_pair = tk.Button(frame ,text = "Play Notes" , command = lambda:play_sounds(int_play_together.get(),notes))
 button_generate_note_pair.pack()
+button_generate_note_pair["state"] = "disabled"
 
 int_unison = tk.IntVar()
 checkbox_unison = tk.Checkbutton(frame, text = "Unison", variable = int_unison, command = update_unison)
