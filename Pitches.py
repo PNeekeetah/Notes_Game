@@ -58,20 +58,15 @@ def play_sound(sound_frequency : float ):
     sd.play(sound, sd.sampling_frequency )    
     
 def play_sounds(together : bool , sounds : list):
-#   if (together):
-#        play_2_sounds_together(sounds)
-#    else:
-    play_sequentially(sounds)
+   if (together):
+       play_2_sounds_together(sounds)
+   else:
+       play_sequentially(sounds)
         
     
 def play_2_sounds_together(sounds : list):
-    threads = list()
-    if (len (sounds) > 0):
-        for index in range(len(sounds)):
-            x = threading.Thread(target = play_sound, args=(sounds[index],))
-            threads.append(x)        
-            x.start()
-            x.join()
+    sound = np.sin(2*pi*samples*sounds[0]) + np.sin(2*pi*samples*sounds[1])
+    sd.play(sound, sd.sampling_frequency)
             
         
 def play_sequentially (sounds : list):
